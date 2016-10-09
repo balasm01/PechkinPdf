@@ -15,7 +15,7 @@
           #page_1 #id_1 {border:none;margin: 0px 0px 0px 0px;padding: 0px;border:none;width: 756px;overflow: hidden;}
           #page_1 #id_2 {border:none;margin: 12px 0px 0px 14px;padding: 0px;border:none;width: 742px;overflow: hidden;}
           #page_1 #id_2 #id_2_1 {float:left;border:none;margin: 0px 0px 0px 0px;padding: 0px;border:none;width: 231px;overflow: hidden;}
-          #page_1 #id_2 #id_2_2 {float:left;border:none;margin: 19px 0px 0px 0px;padding: 0px;border:none;width: 227px;overflow: hidden;}
+          #page_1 #id_2 #id_2_2 {float:left;border:none;margin: 0px 0px 0px 0px;padding: 0px;border:none;width: 227px;overflow: hidden;}
           #page_1 #id_2 #id_2_3 {float:left;border:none;margin: 0px 0px 0px 4px;padding: 0px;border:none;width: 280px;overflow: hidden;}
           #page_1 #id_3 {border:none;margin: 23px 0px 0px 14px;padding: 0px;border:none;width: 742px;overflow: hidden;}
 
@@ -47,7 +47,7 @@
           .ft16{font: 1px 'Times New Roman';line-height: 6px;}
           .ft17{font: 1px 'Times New Roman';line-height: 4px;}
           .ft18{font: 12px 'Times New Roman';line-height: 15px;}
-          .ft19{font: italic bold 12px 'Times New Roman';line-height: 15px;}
+          .ft19{font: bold 12px 'Times New Roman';line-height: 15px;}
           .ft20{font: 1px 'Times New Roman';line-height: 14px;}
           .ft21{font: 12px 'Times New Roman';line-height: 14px;}
           .ft22{font: bold 13px 'Times New Roman';color: #c21b16;line-height: 15px;}
@@ -149,12 +149,12 @@
                 <TR>
                   <TD class="tr0 td0">
                     <P class="p1 ft2">
-                      <SPAN class="ft1">Policy Number: </SPAN>93350586 (Vision)
+                      <SPAN class="ft1">Policy Number: </SPAN><xsl:value-of select="Data/PlanDetail/ProductNumber"/> (Vision)
                     </P>
                   </TD>
                   <TD class="tr0 td1">
                     <P class="p1 ft4">
-                      <SPAN class="ft3">Policy Owner(s): </SPAN>Ms Harmandeep Kaur
+                      <SPAN class="ft3">Policy Owner(s): </SPAN><xsl:value-of select="Data/PlanDetail/LifeAssured1"/>
                     </P>
                   </TD>
                 </TR>
@@ -243,6 +243,7 @@
                 </TABLE>
               </DIV>
               <DIV id="id_2_2">
+                <P class="p0 ft6">&#160;&#160;&#160;</P>
                 <TABLE cellpadding="0" cellspacing="0" class="t1">
                   <TR>
                     <TD class="tr1 td3">
@@ -392,7 +393,11 @@
               <TABLE cellpadding="0" cellspacing="0" class="t2">
                 <TR>
                   <TD class="tr13 td12">
-                    <P class="p3 ft2">HBAE</P>
+                    <P class="p3 ft2">
+                      <xsl:call-template name="string-trim">
+                        <xsl:with-param name="string" select="Data/SwitchData/SwitchDataRows/anyType/SourceFundCode" />
+                      </xsl:call-template>
+                    </P>
                   </TD>
                   <TD class="tr13 td13">
                     <P class="p7 ft18">HSBC GIF Chinese Equity</P>
@@ -401,7 +406,11 @@
                     <P class="p8 ft2">1.00%</P>
                   </TD>
                   <TD class="tr13 td15">
-                    <P class="p7 ft19">ABAE</P>
+                    <P class="p7 ft19">    
+                      <xsl:call-template name="string-trim">
+                          <xsl:with-param name="string" select="Data/SwitchData/SwitchDataRows/anyType/DestFunds/anyType/DestFundCode" />
+                      </xsl:call-template>
+                    </P>
                   </TD>
                   <TD class="tr13 td13">
                     <P class="p7 ft18">Aberdeen Global</P>
@@ -478,14 +487,16 @@
               <P class="p12 ft22">Authorisation</P>
               <P class="p13 ft18">I/we wish to alter my/our investment as shown above. I/we understand that units will be switched and/or future premiums will be redirected on receipt of this request in accordance with the policy conditions. I/we have read the literature which describes the investment strategy for the fund(s) selected.</P>
               <P class="p14 ft18">
-                I/we authorise Generali to proceed with this instruction, subject to all Generali requirements and conditions being met.</P>
+                I/we <input type="checkbox" checked=""/> authorise Generali to proceed with this instruction, subject to all Generali requirements and conditions being met.</P>
               <TABLE cellpadding="0" cellspacing="0" class="t3">
                 <TR>
                   <TD class="tr13 td27">
                     <P class="p1 ft2">IP Address:</P>
                   </TD>
                   <TD class="tr13 td28">
-                    <P class="p15 ft2">::1</P>
+                    <P class="p15 ft2">
+                      <xsl:value-of select="Data/AuthorisationData/IPAddress"/>
+                    </P>
                   </TD>
                 </TR>
                 <TR>
@@ -493,7 +504,9 @@
                     <P class="p1 ft24">Username:</P>
                   </TD>
                   <TD class="tr14 td28">
-                    <P class="p15 ft24">devereweb ( AgentManager )</P>
+                    <P class="p15 ft24">
+                      <xsl:value-of select="Data/AuthorisationData/UserID"/> (<xsl:value-of select="Data/AuthorisationData/UserType"/>)
+                    </P>
                   </TD>
                 </TR>
                 <TR>
@@ -501,7 +514,9 @@
                     <P class="p1 ft24">User Details:</P>
                   </TD>
                   <TD class="tr14 td28">
-                    <P class="p15 ft24">Devere Web Services</P>
+                    <P class="p15 ft24">
+                      <xsl:value-of select="Data/AuthorisationData/UserFirstname"/> <xsl:value-of select="Data/AuthorisationData/UserSurname"/>
+                    </P>
                   </TD>
                 </TR>
                 <TR>
@@ -517,7 +532,9 @@
                     <P class="p1 ft2">Generali Reference #:</P>
                   </TD>
                   <TD class="tr4 td28">
-                    <P class="p15 ft2">16104.12.10.93350586</P>
+                    <P class="p15 ft2">
+                      <xsl:value-of select="Data/AuthorisationData/Reference"/>
+                    </P>
                   </TD>
                 </TR>
               </TABLE>
@@ -541,4 +558,61 @@
         </body>
       </HTML>
   </xsl:template>
+  <!-- Strips leading and trailing whitespace characters from 'string' -->
+  <xsl:variable name="whitespace" select="'&#09;&#10;&#13; '" />
+  <!-- Strips trailing whitespace characters from 'string' -->
+  <xsl:template name="string-rtrim">
+    <xsl:param name="string" />
+    <xsl:param name="trim" select="$whitespace" />
+
+    <xsl:variable name="length" select="string-length($string)" />
+
+    <xsl:if test="$length &gt; 0">
+      <xsl:choose>
+        <xsl:when test="contains($trim, substring($string, $length, 1))">
+          <xsl:call-template name="string-rtrim">
+            <xsl:with-param name="string" select="substring($string, 1, $length - 1)" />
+            <xsl:with-param name="trim"   select="$trim" />
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$string" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- Strips leading whitespace characters from 'string' -->
+  <xsl:template name="string-ltrim">
+    <xsl:param name="string" />
+    <xsl:param name="trim" select="$whitespace" />
+
+    <xsl:if test="string-length($string) &gt; 0">
+      <xsl:choose>
+        <xsl:when test="contains($trim, substring($string, 1, 1))">
+          <xsl:call-template name="string-ltrim">
+            <xsl:with-param name="string" select="substring($string, 2)" />
+            <xsl:with-param name="trim"   select="$trim" />
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$string" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template name="string-trim">
+    <xsl:param name="string" />
+    <xsl:param name="trim" select="$whitespace" />
+    <xsl:call-template name="string-rtrim">
+      <xsl:with-param name="string">
+        <xsl:call-template name="string-ltrim">
+          <xsl:with-param name="string" select="$string" />
+          <xsl:with-param name="trim"   select="$trim" />
+        </xsl:call-template>
+      </xsl:with-param>
+      <xsl:with-param name="trim"   select="$trim" />
+    </xsl:call-template>
+  </xsl:template>  
 </xsl:stylesheet>
