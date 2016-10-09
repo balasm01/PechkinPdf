@@ -5,7 +5,6 @@
       <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=8"/>
-        <TITLE>bcl_41677499.htm</TITLE>
         <meta name="generator" content="BCL easyConverter SDK 5.0.08"/>
         <style type="text/css">
 
@@ -542,7 +541,7 @@
           </DIV>
         </div>
         <div style="width:724px;margin:10px 36px 10px 36px;">
-          <hr/>
+          <hr style="border-color:red;"/>
           <P class="p16 ft25">Generali Worldwide Insurance Company Limited</P>
           <P class="p17 ft26">Registered Office address: Generali House, Hirzel Street, St Peter Port, Guernsey, Channel Islands GY1 4PA</P>
           <P class="p18 ft26">Company Registration No. 27151</P>
