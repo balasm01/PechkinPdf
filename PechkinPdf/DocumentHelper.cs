@@ -5,8 +5,9 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Xml.Xsl;
 using iTextSharp.text;
-using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
+using PechkinPdf.MedTeam.WebExtensions.Helpers.HtmlToPdf;
 
 namespace PechkinPdf
 {
@@ -59,23 +60,10 @@ namespace PechkinPdf
 
         public static byte[] CreateiTextPdfDoc(string exporthtml, string linkedResourcePath = null)
         {
-            if (string.IsNullOrEmpty(linkedResourcePath))
-                linkedResourcePath = ConfigurationManager.AppSettings["linkedResourcePath"];
-            exporthtml = exporthtml.Replace("src=\".", "src=\"" + linkedResourcePath);
-            var htmlReader = new StringReader(exporthtml);
-            using (var ms = new MemoryStream())
-            {
-                var document = new Document(PageSize.A4, 30, 30, 30, 30);
-                PdfWriter.GetInstance(document, ms);
-                var htmlWorker = new HTMLWorker(document);
-                document.Open();
-                htmlWorker.StartDocument();
-                htmlWorker.Parse(htmlReader);
-                htmlWorker.EndDocument();
-                htmlWorker.Close();
-                document.Close();
-                return ms.ToArray();
-            }
+            HtmlToPdfBuilder builder = new HtmlToPdfBuilder(PageSize.A4);
+            HtmlPdfPage first = builder.AddPage();
+            first.AppendHtml(exporthtml);
+            return builder.RenderPdf();
         }
 
         public static byte[] GeneratePdfAsBytes<T>(T pdfData, string xslFilePath)
@@ -83,4 +71,18 @@ namespace PechkinPdf
             return CreatePdfFromHtml(TransformToHtml(pdfData, xslFilePath));
         }
     }
+    //if (string.IsNullOrEmpty(linkedResourcePath))
+    //    linkedResourcePath = ConfigurationManager.AppSettings["linkedResourcePath"];
+    //exporthtml = exporthtml.Replace("src=\".", "src=\"" + linkedResourcePath);
+    //var htmlReader = new StringReader(exporthtml);
+    //        using (var ms = new MemoryStream())
+    //        {
+    //            var document = new Document(PageSize.A4, 30, 30, 30, 30);
+    //var writer = PdfWriter.GetInstance(document, ms);
+    //document.OpenDocument();
+    //            XMLWorkerHelper.GetInstance().ParseXHtml(writer, document, htmlReader);
+    //document.CloseDocument();
+    //            return ms.ToArray();
+
+    //        }
 }
